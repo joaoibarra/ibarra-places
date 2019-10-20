@@ -6,11 +6,12 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.ibarra.places.data.db.converter.DateConverter
 import com.ibarra.places.data.remote.domain.RestaurantRepository
+import com.ibarra.places.data.remote.domain.RestaurantResponse
 import java.util.*
 
 @Entity(tableName = "restaurants")
 @TypeConverters(DateConverter::class)
-class Restaurant (
+data class Restaurant (
     @PrimaryKey(autoGenerate = false) val id: String,
     @ColumnInfo(name = "name") val name: String?,
     @ColumnInfo(name = "url") val url: String?,
@@ -23,6 +24,7 @@ class Restaurant (
     @ColumnInfo(name = "phone_numbers") val phoneNumber: String?,
     @ColumnInfo(name = "aggregate_rating") val rating: Double?,
     @ColumnInfo(name = "all_reviews_count") val reviews: Int?,
+    @ColumnInfo(name = "cuisines") val cuisines: String?,
     @ColumnInfo(name = "created") val created: Date
 ) {
     companion object {
@@ -40,12 +42,13 @@ class Restaurant (
                 phoneNumber = restaurantRepository.phoneNumber,
                 rating = restaurantRepository.userRating?.aggregateRating,
                 reviews = restaurantRepository.allReviewsCount,
+                cuisines = restaurantRepository.cuisines,
                 created = Date()
             )
         }
 
-        fun toList(restaurantRepositories: List<RestaurantRepository>?): List<Restaurant>? {
-            return restaurantRepositories?.map { to(it) }
+        fun toList(restaurantRepositories: List<RestaurantResponse>?): List<Restaurant>? {
+            return restaurantRepositories?.map { to(it.restaurant) }
         }
     }
 }

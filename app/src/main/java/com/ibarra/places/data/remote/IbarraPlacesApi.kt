@@ -7,8 +7,8 @@ import retrofit2.http.Query
 
 interface IbarraPlacesApi {
     @GET("api/v2.1/search")
-    fun getSources(@Query("lat") latitude: String,
+    fun getRestaurants(@Query("lat") latitude: String,
                    @Query("lon") longitude: String,
-                   @Query("lon") start: Int = 0,
-                   @Query("lon") count: Int = 20): Single<SearchResponse>
+                   @Query("start") start: Int = 0,
+                   @Query("count") count: Int = 20): Single<SearchResponse>
 }
