@@ -6,4 +6,5 @@ import org.koin.dsl.module
 
 val RoomModule = module {
     single { AppDatabase.getInstance(androidApplication().applicationContext) }
+    single { get<AppDatabase>().getRestaurantDao() }
 }
