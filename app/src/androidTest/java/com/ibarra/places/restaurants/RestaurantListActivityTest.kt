@@ -41,6 +41,10 @@ class RestaurantListActivityTest: KoinTest {
             launchActivity()
         }
 
+        act {
+            grantLocationPermission()
+        }
+
         assert {
             isRestaurantListVisible()
         }
@@ -51,6 +55,10 @@ class RestaurantListActivityTest: KoinTest {
         arrange(activityRule) {
             mockWebServer(mockWebServer)
             launchActivity()
+        }
+
+        act {
+            grantLocationPermission()
         }
 
         assert {
