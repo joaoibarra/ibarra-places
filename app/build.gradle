@@ -13,6 +13,7 @@ android {
         applicationId "com.ibarra.places"
         minSdkVersion 19
         targetSdkVersion 29
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -34,14 +35,14 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "BASE_URL", '"https://developers.zomato.com"'
-            buildConfigField "String", "API_KEY", '"Basic fe663a7b588e03ed97e72b339e901635"'
+            buildConfigField "String", "API_KEY", '"fe663a7b588e03ed97e72b339e901635"'
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "BASE_URL", '"https://developers.zomato.com"'
-            buildConfigField "String", "API_KEY", '"Basic fe663a7b588e03ed97e72b339e901635"'
+            buildConfigField "String", "API_KEY", '"fe663a7b588e03ed97e72b339e901635"'
         }
     }
 }
@@ -63,6 +64,8 @@ ext{
     kappuccino = '1.2.1'
     ui_automator = '2.2.0'
     androidx_test = '1.2.0'
+    lottie = '3.0.7'
+    play_service = '17.0.0'
 }
 
 dependencies {
@@ -78,6 +81,7 @@ dependencies {
     implementation "androidx.paging:paging-runtime-ktx:$arch"
     implementation "androidx.room:room-runtime:$room"
     implementation 'androidx.browser:browser:1.0.0'
+    implementation "com.google.android.gms:play-services-location:$play_service"
     kapt "androidx.room:room-compiler:$room"
 
     implementation "org.koin:koin-androidx-scope:$koin"
@@ -94,6 +98,8 @@ dependencies {
 
     implementation "com.github.bumptech.glide:glide:$glide"
     kapt "com.github.bumptech.glide:compiler:$glide"
+
+    implementation "com.airbnb.android:lottie:$lottie"
 
     testImplementation "junit:junit:$junit"
     testImplementation "org.koin:koin-test:$koin"

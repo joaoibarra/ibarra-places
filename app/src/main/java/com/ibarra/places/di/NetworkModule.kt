@@ -36,7 +36,7 @@ val NetworkModule = module {
     single {
         Interceptor { chain ->
             chain.proceed(chain.request().newBuilder().apply {
-               header("Authorization", BuildConfig.API_KEY)
+               header("user-key", BuildConfig.API_KEY)
             }.build())
         }
     }
