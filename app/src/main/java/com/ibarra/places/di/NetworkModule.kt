@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.ibarra.places.BuildConfig
 import com.ibarra.places.data.remote.IbarraPlacesApi
 import okhttp3.Cache
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -32,6 +33,14 @@ val NetworkModule = module {
 
     single { GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create() }
 
+    single {
+        Interceptor { chain ->
+            chain.proceed(chain.request().newBuilder().apply {
+               header("Authorization", BuildConfig.API_KEY)
+            }.build())
+        }
+    }
+
     single{
         OkHttpClient.Builder().apply {
             cache(get())
@@ -39,6 +48,7 @@ val NetworkModule = module {
             writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
             readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
             retryOnConnectionFailure(true)
+            addInterceptor(get<Interceptor>())
             addInterceptor(HttpLoggingInterceptor().apply {
                 if (BuildConfig.DEBUG) {
                     level = HttpLoggingInterceptor.Level.BODY

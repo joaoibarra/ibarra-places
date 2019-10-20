@@ -22,17 +22,26 @@ android {
         enabled = true
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildTypes {
         debug {
             buildConfigField "String", "BASE_URL", '"https://developers.zomato.com"'
-            buildConfigField "String", "API_KEY", '"fe663a7b588e03ed97e72b339e901635"'
+            buildConfigField "String", "API_KEY", '"Basic fe663a7b588e03ed97e72b339e901635"'
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "BASE_URL", '"https://developers.zomato.com"'
-            buildConfigField "String", "API_KEY", '"fe663a7b588e03ed97e72b339e901635"'
+            buildConfigField "String", "API_KEY", '"Basic fe663a7b588e03ed97e72b339e901635"'
         }
     }
 }
