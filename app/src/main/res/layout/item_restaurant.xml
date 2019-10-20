@@ -17,7 +17,8 @@
         android:layout_marginTop="@dimen/margin_s"
         android:layout_marginEnd="@dimen/margin_s"
         app:cardCornerRadius="5dp"
-        android:layout_marginStart="@dimen/margin_s">
+        android:layout_marginStart="@dimen/margin_s"
+        android:onClick="@{() -> viewModel.onClickCard(item.url)}">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
