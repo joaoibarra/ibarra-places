@@ -20,7 +20,7 @@ fun assert(func: RestaurantListActivityAssertRobot.() -> Unit) = RestaurantListA
 
 class RestaurantListActivityArrangeRobot(private val rule: ActivityTestRule<RestaurantListActivity>) {
 
-    private val sourceResponse by lazy { "places.json".loadResponse() }
+    private val sourceResponse by lazy { "restaurants.json".loadResponse() }
 
     fun launchActivity() {
         rule.launchActivity(Intent())
