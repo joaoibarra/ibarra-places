@@ -23,7 +23,9 @@ class RestaurantListViewModel(private val ibarraPlacesApi: IbarraPlacesApi,
     var longitude: Double? = null
     val error = MutableLiveData<Boolean>()
     val progress= MutableLiveData<Boolean>()
+    val pageToStart = MutableLiveData<String>()
     var resultsStart: Int = 0
+
 
     init {
         initPagedList()
@@ -34,13 +36,14 @@ class RestaurantListViewModel(private val ibarraPlacesApi: IbarraPlacesApi,
     }
 
     fun getNearbyLocation() {
-        error.postValue(false)
         if(latitude!=null && longitude!=null) {
+            error.postValue(false)
             addToDisposable(
                 ibarraPlacesApi.getRestaurants(latitude.toString(), longitude.toString(), resultsStart)
                     .subscribeOn(Schedulers.io())
                     .doOnSubscribe { showProgress() }
                     .doOnSuccess{ hideProgress() }
+                    .doOnError { hideProgress() }
                     .subscribe({
                         error.postValue(false)
                         resultsStart = it.resultsShown
@@ -49,6 +52,8 @@ class RestaurantListViewModel(private val ibarraPlacesApi: IbarraPlacesApi,
                         error.postValue(true)
                     })
             )
+        }else {
+            error.postValue(true)
         }
     }
 
@@ -65,18 +70,22 @@ class RestaurantListViewModel(private val ibarraPlacesApi: IbarraPlacesApi,
 
     private fun showProgress() {
         if(items?.getValue().isNullOrEmpty()) {
-            progress.postValue(true)
+            this.progress.postValue(true)
         }
     }
 
     private fun hideProgress() {
-        progress.postValue(false)
+        this.progress.postValue(false)
     }
 
     fun updateLocation(latitude: Double, longitude: Double) {
         this.latitude = latitude
         this.longitude = longitude
         getNearbyLocation()
+    }
+
+    fun onClickCard(url: String) {
+        pageToStart.postValue(url)
     }
 
     override fun onCleared() {

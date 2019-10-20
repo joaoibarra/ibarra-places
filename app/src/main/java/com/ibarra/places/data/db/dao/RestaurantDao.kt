@@ -20,6 +20,9 @@ interface RestaurantDao {
     @Delete
     fun delete(article: Restaurant)
 
+    @Query("DELETE FROM restaurants")
+    fun deleteAll()
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(sources: List<Restaurant>?)
 }

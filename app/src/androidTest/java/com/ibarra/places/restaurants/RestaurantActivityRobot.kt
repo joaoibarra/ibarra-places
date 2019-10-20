@@ -1,9 +1,11 @@
 package com.ibarra.places.restaurants
 
+import android.Manifest
 import android.content.Intent
 import androidx.test.rule.ActivityTestRule
 import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions
 import br.com.concretesolutions.kappuccino.custom.recyclerView.RecyclerViewInteractions
+import br.com.concretesolutions.kappuccino.custom.runtimePermission.runtimePermission
 import com.ibarra.places.R
 import com.ibarra.places.extensions.loadResponse
 import com.ibarra.places.ui.restaurants.RestaurantListActivity
@@ -49,6 +51,12 @@ class RestaurantListActivityActRobot {
             atPosition(position) {
                 click()
             }
+        }
+    }
+
+    fun grantLocationPermission() {
+        runtimePermission(Manifest.permission.ACCESS_FINE_LOCATION) {
+            allow()
         }
     }
 }

@@ -2,11 +2,14 @@ package com.ibarra.places.ui.restaurants
 
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.ibarra.places.R
@@ -30,6 +33,9 @@ class RestaurantListActivity : AppCompatActivity() {
         binding.viewModel = restaurantListViewModel
         binding.lifecycleOwner = this
 
+        restaurantListViewModel.pageToStart.observe(this, Observer { url ->
+            openRestaurantAtBrowser(url)
+        })
     }
 
     override fun onStart() {
@@ -64,5 +70,10 @@ class RestaurantListActivity : AppCompatActivity() {
         }?.addOnFailureListener {
 
         }
+    }
+
+    private fun openRestaurantAtBrowser(url: String) {
+        val customTabsIntent = CustomTabsIntent.Builder().build()
+        customTabsIntent.launchUrl(this, Uri.parse(url))
     }
 }
