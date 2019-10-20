@@ -6,5 +6,5 @@ class SearchResponse (
     @SerializedName("results_found") val resultsFound: Int,
     @SerializedName("results_start") val resultsStart: Int,
     @SerializedName("results_shown") val resultsShown: Int,
-    @SerializedName("restaurants") val restaurants: List<RestaurantRepository>
+    @SerializedName("restaurants") val restaurants: List<RestaurantResponse>
 )
